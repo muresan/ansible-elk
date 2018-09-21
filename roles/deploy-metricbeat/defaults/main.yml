@@ -1,0 +1,4 @@
+---
+# defaults file for deploy-metricbeat
+
+metricbeat_version: 6.4.0

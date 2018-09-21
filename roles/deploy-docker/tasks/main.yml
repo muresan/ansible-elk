@@ -1,0 +1,53 @@
+---
+# tasks file for deploy-docker
+- name: install packages requied by docker
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ required_packages }}"
+
+- name: install python modules required 
+  pip: 
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ required_python_packages }}"
+
+- name: add docker signing key to rpm
+  rpm_key:
+    key: '{{ item }}'
+    state: present
+  with_items:
+    - https://download.docker.com/linux/centos/gpg
+
+- name: add docker-ce repository
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+
+- name: install docker packages
+  package:
+    name: '{{ item }}'
+    state: present
+  with_items: "{{ docker_version }}"
+
+- name: ensure docker service will start on reboot
+  service:
+    name: '{{ item }}'
+    enabled: yes
+    state: started
+  with_items:
+    - docker
+
+- name: add users to docker group
+  user:
+    append: yes
+    groups: docker
+    name: "{{ item }}"
+  with_items: "{{ docker_users }}"
+
+- name: install docker-compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+    dest: /usr/bin/docker-compose
+    mode: "0755"
+

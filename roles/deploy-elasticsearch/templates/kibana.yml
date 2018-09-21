@@ -1,0 +1,6 @@
+elasticsearch.username: "kibana"
+elasticsearch.password: "kibana"
+server.host: "0.0.0.0"
+server.name: "localhost"
+elasticsearch.url: "http://elasticsearch:{{es_port}}"
+xpack.monitoring.ui.container.elasticsearch.enabled: true

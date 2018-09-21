@@ -1,0 +1,16 @@
+metricbeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+processors:
+- add_cloud_metadata:
+
+output.elasticsearch:
+  hosts: ['localhost:{{es_port}}']
+  username: elastic
+  password: changeme
+
+setup.dashboards.enabled: true
+setup.dashboards.retry.enabled: true
+setup.dashboards.retry.interval: 10
+setup.kibana.host: "localhost:{{kibana_port}}"

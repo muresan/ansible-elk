@@ -1,0 +1,20 @@
+---
+# defaults file for deploy-elasticsearch
+es_version: "6.4.0"
+es_port: "9200"
+es_compose_path: "/elasticsearch"
+es_data_path: "/elasticsearch-data"
+kibana_port: "5601"
+sysctl_items:
+  vm.max_map_count: 262144
+  vm.swappiness: 1
+  fs.inotify.max_user_instances: 8192
+es_compose_files:
+  - docker-compose.yml
+  - kibana.yml
+  - metricbeat.yml
+  - filebeat.yml
+es_compose_dirs:
+  - filebeat-modules.d
+  - filebeat-prospectors.d
+  - metricbeat-modules.d

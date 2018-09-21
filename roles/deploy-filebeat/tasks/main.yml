@@ -1,0 +1,21 @@
+---
+# tasks file for deploy-filebeat
+
+# https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.4.0-x86_64.rpm
+
+- name: install filebeat rpm package
+  yum:
+    name: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{filebeat_version}}-{{ansible_architecture}}.rpm
+    state: present
+
+- name: setup filebeat config
+  copy:
+    src: filebeat.yml
+    dest: /etc/filebeat/filebeat.yml
+
+- name: start filebeat and ensure it runs at boot
+  service:
+    name: filebeat
+    enabled: yes
+    state: started
+

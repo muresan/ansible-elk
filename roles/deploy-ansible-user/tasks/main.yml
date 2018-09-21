@@ -1,0 +1,20 @@
+---
+# tasks file for deploy-ansible-user
+- name: Ensure ansible user exists 
+  user: 
+    name: ansible 
+    state: present 
+    comment: Ansible 
+
+- name: Ensure ansible user accepts the SSH key 
+  authorized_key: 
+    user: ansible 
+    key: '{{ item }}'
+    state: present 
+  with_file:
+    - ansible_ssh.pub
+
+- name: Ensure the ansible user is sudoer with no password required 
+  copy: 
+    dest: /etc/sudoers.d/ansible
+    content: 'ansible ALL=(ALL) NOPASSWD:ALL' 

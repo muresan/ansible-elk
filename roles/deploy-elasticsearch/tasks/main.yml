@@ -1,0 +1,51 @@
+---
+# tasks file for deploy-elasticsearch
+
+- name: set required sysctl parameters for elasticsearch
+  sysctl:
+    name: "{{ item.key }}"
+    state: present
+    value: "{{ item.value }}"
+    sysctl_set: yes        
+    reload: yes
+  with_dict: "{{ sysctl_items }}"
+  
+- name: create elasticsearch paths for docker-compose
+  file:
+    path: "{{ item }}"
+    mode: "0755"
+    state: directory
+  with_items:
+  - "{{es_data_path}}"
+  - "{{es_compose_path}}"
+
+- name: deploy service definition and configuration files
+  template:
+    src: "{{ item }}"
+    dest: "{{es_compose_path}}/{{ item }}"
+  with_items: "{{ es_compose_files }}"
+
+- name: copy metricbeat specific configuration files
+  copy:
+    src: "{{ item }}"
+    dest: "{{es_compose_path}}/"
+  with_items: "{{ es_compose_dirs }}"
+
+
+#- name: grant metricbeat (uid:1000) access to /var/run/docker.sock
+#  acl: 
+#    path: /var/run/docker.sock
+#    entity: 1000
+#    etype: user
+#    permissions: r
+#    state: present
+
+- name: deploy elasticsearch using docker-compose
+  docker_service:
+    project_src: "{{es_compose_path}}"
+    state: present
+  register: output
+
+- debug:
+    var: output
+

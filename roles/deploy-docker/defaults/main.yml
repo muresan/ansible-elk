@@ -1,0 +1,21 @@
+---
+# defaults file for deploy-docker
+required_packages:
+  - net-tools
+  - strace
+  - curl
+  - ethtool
+  - ebtables
+  - socat
+  - dstat
+  - epel-release
+  - python2-pip
+required_python_packages:
+  - docker
+  - docker-compose
+docker_users:
+  - ansible
+docker_version: docker-ce
+docker_compose_version: "1.22.0"
+
+
