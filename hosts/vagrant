@@ -1,1 +1,8 @@
+[elasticsearch]
 192.168.121.225
+
+[metricbeat]
+192.168.121.168
+
+[filebeat]
+192.168.121.168

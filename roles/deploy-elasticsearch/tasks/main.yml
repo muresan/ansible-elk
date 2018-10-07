@@ -31,7 +31,6 @@
     dest: "{{es_compose_path}}/"
   with_items: "{{ es_compose_dirs }}"
 
-
 #- name: grant metricbeat (uid:1000) access to /var/run/docker.sock
 #  acl: 
 #    path: /var/run/docker.sock

@@ -19,6 +19,17 @@ services:
     ports:
       - "{{kibana_port}}:5601"
 
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - type: bind
+        source: "{{ es_compose_path }}/grafana-elasticsearch.yml"
+        target: /etc/grafana/provisioning/datasources/elasticsearch.yml
+    networks:
+      - elastic
+    ports:
+      - "{{grafana_port}}:3000"
+
   metricbeat:
     image: "docker.elastic.co/beats/metricbeat:{{es_version}}"
     command: "-system.hostfs=/hostfs"
