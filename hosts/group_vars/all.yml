@@ -4,7 +4,7 @@ docker_compose_version: "1.22.0"
 # elasticsearch and related
 es_host: "elasticsearch"
 logstash_host: "logstash"
-es_version: "6.4.0"
+es_version: "6.4.2"
 es_port: "9200"
 kibana_port: "5601"
 grafana_port: "3000"

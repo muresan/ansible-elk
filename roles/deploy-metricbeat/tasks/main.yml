@@ -8,6 +8,14 @@
     name: https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-{{metricbeat_version}}-{{ansible_architecture}}.rpm
     state: present
 
+- name: copy metricbeat modules.d
+  copy:
+    src: "{{ item }}"
+    dest: "{{ metricbeat_etc }}/"
+  with_items: "{{ metricbeat_modules }}"
+  notify:
+    - restart metricbeat
+
 - name: setup metricbeat config
   template:
     src: metricbeat.yml

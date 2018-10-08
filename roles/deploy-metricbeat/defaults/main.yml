@@ -2,4 +2,5 @@
 # defaults file for deploy-metricbeat
 
 metricbeat_version: "{{es_version}}"
-
+metricbeat_modules: "modules.d"
+metricbeat_etc:     "/etc/metricbeat"

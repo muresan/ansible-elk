@@ -2,3 +2,5 @@
 # defaults file for deploy-filebeat
 
 filebeat_version: "{{es_version}}"
+filebeat_modules: "modules.d"
+filebeat_etc:     "/etc/filebeat"

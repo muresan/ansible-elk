@@ -8,6 +8,14 @@
     name: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{filebeat_version}}-{{ansible_architecture}}.rpm
     state: present
 
+- name: copy filebeat modules.d
+  copy:
+    src: "{{ item }}"
+    dest: "{{ filebeat_etc }}/"
+  with_items: "{{ filebeat_modules }}"
+  notify:
+    - restart filebeat
+
 - name: setup filebeat config
   template:
     src: filebeat.yml
