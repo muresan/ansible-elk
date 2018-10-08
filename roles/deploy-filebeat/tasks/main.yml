@@ -9,9 +9,11 @@
     state: present
 
 - name: setup filebeat config
-  copy:
+  template:
     src: filebeat.yml
     dest: /etc/filebeat/filebeat.yml
+  notify:
+    - restart filebeat
 
 - name: start filebeat and ensure it runs at boot
   service:

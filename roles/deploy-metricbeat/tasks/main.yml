@@ -9,9 +9,11 @@
     state: present
 
 - name: setup metricbeat config
-  copy:
+  template:
     src: metricbeat.yml
     dest: /etc/metricbeat/metricbeat.yml
+  notify:
+    - restart metricbeat
 
 - name: start metricbeat and ensure it runs at boot
   service:

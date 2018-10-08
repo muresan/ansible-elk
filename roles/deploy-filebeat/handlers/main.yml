@@ -1,2 +1,6 @@
 ---
 # handlers file for deploy-filebeat
+- name: restart filebeat
+  service:
+    name: filebeat
+    state: restarted

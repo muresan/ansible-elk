@@ -1,4 +1,4 @@
 ---
 # defaults file for deploy-filebeat
 
-filebeat_version: 6.4.0
+filebeat_version: "{{es_version}}"
