@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: elasticsearch
   become: True
   roles: [ { role: deploy-docker } ]
 

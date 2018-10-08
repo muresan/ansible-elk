@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: metricbeat
   become: True
   roles: [ { role: deploy-metricbeat } ]
 

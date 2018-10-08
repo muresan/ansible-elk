@@ -6,7 +6,7 @@ processors:
 - add_cloud_metadata:
 
 output.elasticsearch:
-  hosts: ['localhost:{{es_port}}']
+  hosts: ['elasticsearch:{{es_port}}']
   username: elastic
   password: changeme
 

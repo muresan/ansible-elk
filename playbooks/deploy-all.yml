@@ -1,0 +1,17 @@
+---
+- hosts: elasticsearch
+  become: True
+  roles: [ { role: deploy-docker } ]
+
+- hosts: elasticsearch
+  become: True
+  roles: [ { role: deploy-elasticsearch } ]
+
+- hosts: filebeat
+  become: True
+  roles: [ { role: deploy-filebeat } ]
+
+- hosts: metricbeat
+  become: True
+  roles: [ { role: deploy-metricbeat } ]
+

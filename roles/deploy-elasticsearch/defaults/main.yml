@@ -6,6 +6,8 @@ es_compose_path: "/elasticsearch"
 es_data_path: "/elasticsearch-data"
 kibana_port: "5601"
 grafana_port: "3000"
+logstash_port: "5044"
+logstash_api: "9600"
 sysctl_items:
   vm.max_map_count: 262144
   vm.swappiness: 1
@@ -16,6 +18,8 @@ es_compose_files:
   - metricbeat.yml
   - filebeat.yml
   - grafana-elasticsearch.yml
+  - logstash.conf
+  - logstash.yml
 es_compose_dirs:
   - filebeat-modules.d
   - filebeat-prospectors.d
