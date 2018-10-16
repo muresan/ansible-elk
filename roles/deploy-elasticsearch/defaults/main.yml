@@ -24,3 +24,4 @@ es_compose_dirs:
   - filebeat-modules.d
   - filebeat-prospectors.d
   - metricbeat-modules.d
+  - logstash-pipeline
