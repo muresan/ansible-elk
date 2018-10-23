@@ -19,6 +19,13 @@
   - "{{es_data_path}}"
   - "{{es_compose_path}}"
 
+- name: create elasticsearch data paths 
+  file:
+    path: "{{ es_data_path }}/{{ item.key }}"
+    mode: "0755"
+    state: directory
+  with_dict: "{{es_nodes}}"
+
 - name: deploy service definition and configuration files
   template:
     src: "{{ item }}"
