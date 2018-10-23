@@ -1,0 +1,23 @@
+---
+# tasks file for build-kibana
+
+- name: create elasticsearch paths for docker-compose
+  file:
+    path: "{{ item }}"
+    mode: "0755"
+    state: directory
+  with_items:
+  - "{{es_compose_path}}/kibana-docker"
+
+- name: copy metricbeat specific configuration files
+  copy:
+    src: Dockerfile
+    dest: "{{es_compose_path}}/kibana-docker/"
+
+
+- name: Build image and with buildargs
+  docker_image:
+     path: "{{ es_compose_path }}/kibana-docker/"
+     name: kibana
+
+

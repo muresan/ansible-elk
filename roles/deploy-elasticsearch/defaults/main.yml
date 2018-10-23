@@ -7,17 +7,31 @@ es_data_path: "/elasticsearch-data"
 es_cpu: 2
 es_mem: 2g
 
+deploy_elastic: false
 deploy_kibana: true
-deploy_logstash: true
+deploy_logstash: false
+deploy_grafana: false
+deploy_kafka: true
+deploy_filebeat: false
+deploy_metricbeat: false
 
 kibana_port: "5601"
 grafana_port: "3000"
 logstash_port: "5044"
 logstash_api: "9600"
+
+kibana_image: kibana
+elastic_image: docker.elastic.co/elasticsearch/elasticsearch
+filebeat_image: docker.elastic.co/beats/filebeat
+metricbeat_image: docker.elastic.co/beats/metricbeat
+logstasn_image: docker.elastic.co/logstash/logstash
+grafana_image: grafana/grafana
+
 sysctl_items:
   vm.max_map_count: 262144
   vm.swappiness: 1
   fs.inotify.max_user_instances: 8192
+
 es_compose_files:
   - docker-compose.yml
   - kibana.yml

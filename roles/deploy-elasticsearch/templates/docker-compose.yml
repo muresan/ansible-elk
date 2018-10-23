@@ -1,6 +1,8 @@
 # docker-compose.yml
 version: '3.5'
 services:
+
+{% if deploy_elastic %}
 {% for node in es_nodes %}
   {{ node }}:
     image: docker.elastic.co/elasticsearch/elasticsearch:{{es_version}}
@@ -18,7 +20,9 @@ services:
       - "{{ es_nodes[node].es_port }}:9200"
 
 {% endfor %}
+{% endif %}
 
+{% if deploy_logstash %}
   logstash:
     image: docker.elastic.co/logstash/logstash:{{es_version}}
     volumes:
@@ -33,7 +37,9 @@ services:
     ports:
       - "{{logstash_port}}:5044"
 #      - "{{logstash_api}}:9600"
+{% endif %}
 
+{% if deploy_kibana %}
   kibana:
     image: docker.elastic.co/kibana/kibana:{{es_version}}
     volumes:
@@ -44,7 +50,9 @@ services:
       - elastic
     ports:
       - "{{kibana_port}}:5601"
+{% endif %}
 
+{% if deploy_grafana %}
   grafana:
     image: grafana/grafana
     volumes:
@@ -55,7 +63,9 @@ services:
       - elastic
     ports:
       - "{{grafana_port}}:3000"
+{% endif %}
 
+{% if deploy_metricbeat %}
   metricbeat:
     image: docker.elastic.co/beats/metricbeat:{{es_version}}
     command: "-system.hostfs=/hostfs"
@@ -83,7 +93,9 @@ services:
         source: /var/run/docker.sock
         target: /var/run/docker.sock
     network_mode: host
+{% endif %}
 
+{% if deploy_filebeat %}
   filebeat:
     image: docker.elastic.co/beats/filebeat:{{es_version}}
     user: root
@@ -100,10 +112,9 @@ services:
       - type: bind
         source: "{{ es_compose_path }}/filebeat-prospectors.d"
         target: /usr/share/filebeat/prospectors.d
-
     networks:
       - elastic
-
+{% endif %}
 
 networks:
   elastic:
