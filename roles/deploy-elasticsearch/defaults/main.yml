@@ -1,9 +1,15 @@
 ---
 # defaults file for deploy-elasticsearch
-es_version: "6.4.0"
-es_port: "9200"
+es_version: "6.4.2"
+es_port: 9200
 es_compose_path: "/elasticsearch"
 es_data_path: "/elasticsearch-data"
+es_cpu: 2
+es_mem: 2g
+
+deploy_kibana: true
+deploy_logstash: true
+
 kibana_port: "5601"
 grafana_port: "3000"
 logstash_port: "5044"
@@ -18,10 +24,41 @@ es_compose_files:
   - metricbeat.yml
   - filebeat.yml
   - grafana-elasticsearch.yml
-  - logstash.conf
   - logstash.yml
+  - elasticsearch.yml
 es_compose_dirs:
   - filebeat-modules.d
   - filebeat-prospectors.d
   - metricbeat-modules.d
   - logstash-pipeline
+
+es_nodes:
+  elastic1:
+    es_port: 9200
+  elastic2:
+    es_port: 9201
+  elastic3:
+    es_port: 9202
+
+es_config:
+  cluster.name: "elastic"
+  discovery.zen.ping.unicast.hosts: "{{ es_nodes | array_to_str }}"
+  discovery.zen.minimum_master_nodes: "{{ es_nodes | length }}"
+  network.host: "_eth0_"
+  #network.publish_host: "_eth0_"
+  http.port: "{{ es_port }}"
+  transport.tcp.port: 9300
+  bootstrap.memory_lock: false
+  node.master: true
+  node.data: true
+  processors: "{{ es_cpu }}"
+es_data_dirs:
+  - /usr/share/elasticsearch/data
+es_log_dir: /usr/share/elasticsearch/logs
+es_enable_xpack: true
+es_xpack_features:
+  - security
+  - monitoring
+  - alerting
+  - ml
+  - graph
