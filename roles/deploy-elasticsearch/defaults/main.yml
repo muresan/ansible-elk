@@ -7,13 +7,13 @@ es_data_path: "/elasticsearch-data"
 es_cpu: 2
 es_mem: 2g
 
-deploy_elastic: false
+deploy_elastic: true
 deploy_kibana: true
-deploy_logstash: false
-deploy_grafana: false
+deploy_logstash: true
+deploy_grafana: true
 deploy_kafka: true
-deploy_filebeat: false
-deploy_metricbeat: false
+deploy_filebeat: true
+deploy_metricbeat: true
 
 kibana_port: "5601"
 grafana_port: "3000"
