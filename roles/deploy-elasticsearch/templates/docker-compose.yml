@@ -10,10 +10,14 @@ services:
     environment:
       ES_JAVA_OPTS: "-Xms{{es_mem}} -Xmx{{es_mem}}"
       node.name: {{ node }}
+      TAKE_FILE_OWNERSHIP: true
     volumes:
       - type: bind
         source: "{{ es_compose_path }}/elasticsearch.yml"
         target: /usr/share/elasticsearch/config/elasticsearch.yml
+      - type: bind
+        source: "{{ es_data_path }}/{{ node }}"
+        target: /usr/share/elasticsearch/data        
     networks:
       - elastic
     ports:
