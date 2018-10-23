@@ -1,11 +1,11 @@
 ---
 - hosts: elasticsearch
   become: True
-  roles: [ { role: deploy-docker } ]
-
-- hosts: elasticsearch
-  become: True
-  roles: [ { role: deploy-elasticsearch } ]
+  roles: [
+    { role: deploy-docker },
+    { role: build-kibana },
+    { role: deploy-elasticsearch }
+  ]
 
 - hosts: filebeat
   become: True
