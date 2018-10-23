@@ -41,7 +41,7 @@ services:
 
 {% if deploy_kibana %}
   kibana:
-    image: docker.elastic.co/kibana/kibana:{{es_version}}
+    image: {{kibana_image}}:{{es_version}}
     volumes:
       - type: bind
         source: "{{ es_compose_path }}/kibana.yml"

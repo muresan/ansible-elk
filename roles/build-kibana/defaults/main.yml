@@ -2,3 +2,4 @@
 # defaults file for build-kibana
 
 es_compose_path: /elasticsearch
+es_version: 6.4.2
